@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+
+body{
+    background-color: #F5F5F5;
+    /* background-color: #393646; */
+}
+/* 
+p,h1,h2{
+    color:#F4EEE0
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.stats-section>h1{
+    text-align: center;
+    font-family: Poppins;
+    
+}    
+
+
+
+.stats{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pie-graph{
+    /* width: 50%; */
+
+}
+.other-stats>h2{
+    font-family: Roboto;
+}
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 800px) {
+    .stats{
+        flex-flow: column;
+    }
+    .other-stats>h2{
+        text-align: center;
+    }
+
+}
