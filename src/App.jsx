@@ -55,27 +55,29 @@ const App = () => {
         Toggle Theme
       </button>
 
-      <div className="profile-card">
-        <div className="profile-picture">
-          <img src={profilePicture} alt="Profile" />
-        </div>
-        <div className="profile-details">
-          <div className="name">{name}</div>
-          <div className="username">@{username}</div>
-          <div className="detail">
-            <i className="fas fa-user"></i> <span>{gender}, {age} years old</span>
+      <div className="profile-section">
+        <div className="profile-card">
+          <div className="profile-picture">
+            <img src={profilePicture} alt="Profile" />
           </div>
-          <div className="detail">
-            <i className="fas fa-graduation-cap"></i> <span>{grade}</span>
-          </div>
-          <div className="detail">
-            <i className="fas fa-school"></i> <span>{school}</span>
-          </div>
-          <div className="detail">
-            <i className="fas fa-map-marker-alt"></i> <span>{location}</span>
-          </div>
-          <div className="bio">
-            <p>{bio}</p>
+          <div className="profile-details">
+            <div className="name">{name}</div>
+            <div className="username">@{username}</div>
+            <div className="detail">
+              <i className="fas fa-user"></i> <span>{gender}, {age} years old</span>
+            </div>
+            <div className="detail">
+              <i className="fas fa-graduation-cap"></i> <span>{grade}</span>
+            </div>
+            <div className="detail">
+              <i className="fas fa-school"></i> <span>{school}</span>
+            </div>
+            <div className="detail">
+              <i className="fas fa-map-marker-alt"></i> <span>{location}</span>
+            </div>
+            <div className="bio">
+              <p>{bio}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -84,22 +86,21 @@ const App = () => {
       {/* Stats Code */}
 
       <div className="stats-section">
-        <h1>User Stats</h1>        
+        <h1>User Stats</h1>
         <div className='stats'>
-            
-            <div className="pie-graph">
-                <Pie 
-                data = {data}
-                options = {options}>
-                </Pie>
-            </div>
-            <div className="other-stats">
-                <h2>Total Hours: 102hr</h2>
-                {/* <h2>Total Hours: 102hr</h2> */}
-                <h2>Average per day 13.3hr/day</h2>
-            </div>
+          <div className="pie-graph">
+            <Pie
+              data={data}
+              options={options}
+              width={200} // Adjust the width to your preference
+            />
+          </div>
+          <div className="other-stats">
+            <h2>Total Hours: 102hr</h2>
+            <h2>Average per day 13.3hr/day</h2>
+          </div>
         </div>
-      </div>
+      </div>  
     </div>
   );
 };

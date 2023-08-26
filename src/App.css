@@ -1,15 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap');
 
-
-/* Reset default margin and padding */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Basic styling */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -17,13 +14,18 @@ body {
 }
 
 .main {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.profile-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f5f5f5; 
-  transition: background-color 0.3s, color 0.3s; 
+  padding-top: 40px;
 }
+
 
 .theme-toggle {
   background-color: transparent;
@@ -130,9 +132,49 @@ body {
 .dark .detail,
 .dark .bio {
   color: #f4eee0; 
+}
 
 /* Stat Section */
 
+.stats-section > h1 {
+  text-align: center;
+  font-family: Poppins;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.pie-graph {
+  flex: 1;
+  max-width: 300px;
+  margin-right: 20px;
+}
+
+.other-stats > h2 {
+  font-family: Roboto;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .stats {
+      flex-direction: column; /* Stack items in a column on smaller screens */
+      align-items: center; /* Center items horizontally */
+  }
+
+  .pie-graph {
+      margin-right: 0; /* Remove margin on smaller screens */
+      margin-bottom: 20px; /* Add margin at the bottom */
+  }
+}
+
+/*
 .stats-section>h1{
     text-align: center;
     font-family: Poppins;
@@ -159,3 +201,4 @@ body {
     }
   }
 }
+*/
