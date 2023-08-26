@@ -31,23 +31,29 @@ const App = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
+  const lightColors = ['#FF7E67', '#66A4FF', '#6FCF97']; 
+  const darkColors = ['#A2678A', '#102C57', '#3D246C']; 
+
   const data = {
-    labels: ['Subject#1',"Subject#2","Subject#3"],
-    datasets:[{
-        // label:'Poll',
-        data: [3,6,8],
-        backgroundColor:["#A2678A","#102C57","#3D246C"],
-        borderColor:["black"],
-        Color:["white"]
+    labels: ['Subject#1', 'Subject#2', 'Subject#3'],
+    datasets: [
+      {
+        data: [3, 6, 8],
+        backgroundColor: theme === 'light' ? lightColors : darkColors, 
+        borderColor: ['black'],
+        color: ['white'],
+      },
+    ],
+  };
 
-    }]
-  }
   const options = {
-    responsive: true
-
-    
-
-  }
+    responsive: true,
+    elements: {
+      arc: {
+        borderWidth: 0, // Set the border width to 0 to remove outlines
+      },
+    },
+  };
 
   return (
     <div className={`main ${theme}`}>

@@ -1,12 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap');
 
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+/* Reset default margin and padding */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Basic styling */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -23,9 +29,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 40px;
+  margin-top: 0; 
+  margin-bottom: 40px;
+  padding-top: 40px; 
 }
-
 
 .theme-toggle {
   background-color: transparent;
@@ -140,7 +147,6 @@ body {
   text-align: center;
   font-family: Poppins;
   margin-bottom: 20px;
-  margin-top: 40px;
 }
 
 .stats {
@@ -148,13 +154,25 @@ body {
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 20px; /* Add spacing between profile card and stat section */
 }
 
 .pie-graph {
   flex: 1;
   max-width: 300px;
   margin-right: 20px;
+}
+
+.chartjs-render-monitor .chartjs-doughnut-arc {
+  stroke: none; /* Remove stroke outlines */
+}
+
+.main.light .pie-graph .chartjs-render-monitor {
+  filter: brightness(1.2); /* Lighten the chart colors in light theme */
+}
+
+.main.dark .pie-graph .chartjs-render-monitor {
+  filter: brightness(0.8); /* Darken the chart colors in dark theme */
 }
 
 .other-stats > h2 {
