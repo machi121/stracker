@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 import pfp from "./images/ayanokoji.jpg";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -23,17 +24,19 @@ const App = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  const lightColors = ["#FF7E67", "#66A4FF", "#6FCF97"];
-  const darkColors = ["#A2678A", "#102C57", "#3D246C"];
+  const lightColors = ["#96B6C5", "#A0C49D", "#A9907E"];
+  const darkColors = ["#614BC3", "#678983", "#352F44"];
 
   const data = {
     labels: ["Subject#1", "Subject#2", "Subject#3"],
     datasets: [
       {
+        label: "Poll",
         data: [3, 6, 8],
         backgroundColor: theme === "light" ? lightColors : darkColors,
         borderColor: ["black"],
         color: ["white"],
+        borderWidth: 1,
       },
     ],
   };
@@ -89,6 +92,19 @@ const App = () => {
       setLogs([...logs, newLog]);
     }
     setNewLog({ ...initialLog });
+  }
+  
+  const total_data = {
+    labels: ["Total Hours", "Average Hours"],
+    datasets: [
+      {
+        label: "Poll",
+        data: [120.4, 93],
+        backgroundColor: theme === "light" ? lightColors : darkColors,
+        borderColor: ["black"],
+        color: ["white"],
+      },
+    ],
   };
 
   return (
@@ -140,8 +156,7 @@ const App = () => {
             />
           </div>
           <div className="other-stats">
-            <h2>Total Hours: 102hr</h2>
-            <h2>Average per day 13.3hr/day</h2>
+            <Doughnut data={total_data} options={options} />
           </div>
         </div>
       </div>
