@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import "./App.css";
 import pfp from "../images/ayanokoji.jpg";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Bar, Pie } from "react-chartjs-2";
 import { Doughnut } from "react-chartjs-2";
-// import {Routez} from "./Routes"
+import axios from "axios";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const MainPage = () => {
+  const API_URL =
+    "https://oif3ocmqbh.execute-api.ca-central-1.amazonaws.com/prod/user/log";
+
+  // Rest of the code
   const [theme, setTheme] = useState("light");
   const [profilePicture, setProfilePicture] = useState(pfp);
   const [name, setName] = useState("綾小路 清隆");
@@ -19,7 +23,11 @@ const MainPage = () => {
   const [school, setSchool] = useState("東京都高度育成高等学校");
   const [location, setLocation] = useState("Tokyo, Japan");
   const [bio, setBio] = useState("Everyone is just a tool to me.");
-  const [subjectOptions, setSubjectOptions] = useState(["Math", "English", "Physics"]);
+  const [subjectOptions, setSubjectOptions] = useState([
+    "Math",
+    "English",
+    "Physics",
+  ]);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -80,21 +88,28 @@ const MainPage = () => {
   const [newLog, setNewLog] = useState({ ...initialLog });
 
   const handleAddLog = () => {
-    if (newLog.subject === "custom" && newLog.customSubject) {
-      setLogs([
-        ...logs,
-        {
-          ...newLog,
-          subject: newLog.customSubject,
-          customSubject: undefined, // Reset custom subject
-        },
-      ]);
-    } else {
-      setLogs([...logs, newLog]);
+    if (!newLog.subject || !newLog.duration || !newLog.description) {
+      // Prevent adding empty log
+      return;
     }
-    setNewLog({ ...initialLog });
-  }
-  
+
+    const logToAdd = {
+      subject: newLog.subject,
+      duration: newLog.duration,
+      description: newLog.description,
+    };
+
+    axios.post(API_URL, logToAdd)
+      .then((response) => {
+        const createdLog = response.data; // Newly created log from the API
+        setLogs([...logs, createdLog]); // Add the new log to the local state
+        setNewLog({ ...initialLog }); // Reset the newLog state
+      })
+      .catch((error) => {
+        console.error("Error adding log:", error);
+      });
+  };
+
   const total_data = {
     labels: ["Total Hours", "Average Hours"],
     datasets: [

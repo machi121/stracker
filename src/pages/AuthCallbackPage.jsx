@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import './AuthCallbackPage.css'; // Import your CSS file
 
 const AuthCallbackPage = () => {
-  console.log('Rendering AuthCallbackPage'); 
   const navigate = useNavigate();
-  const [redirectToApp, setRedirectToApp] = useState(false);
+  const [showButton, setShowButton] = useState(true);
 
   useEffect(() => {
     console.log('AuthCallbackPage useEffect triggered');
-  
+
     const urlParams = new URLSearchParams(window.location.hash.substring(1));
     const idToken = urlParams.get('id_token');
     const accessToken = urlParams.get('access_token');
@@ -19,13 +19,22 @@ const AuthCallbackPage = () => {
   
     console.log(Cookies.get('idToken'));
     console.log(Cookies.get('accessToken'));
-  
-    // No redirection code here
   }, []);
 
+  console.log('Rendering AuthCallbackPage');
+
+  const handleGoToHomeClick = () => {
+    navigate('/main');
+  };
+
   return (
-    <div>
-      <p>You're successfully logged in.</p>
+    <div className="auth-callback-container">
+      <p className="success-message">You're successfully logged in.</p>
+      {showButton && (
+        <button className="go-to-home-button" onClick={handleGoToHomeClick}>
+          Go to Home
+        </button>
+      )}
     </div>
   );
 };
