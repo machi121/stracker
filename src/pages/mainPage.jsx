@@ -13,6 +13,8 @@ const MainPage = () => {
   const API_URL =
     "https://oif3ocmqbh.execute-api.ca-central-1.amazonaws.com/prod/user/log";
 
+  const STAT_URL = "https://oif3ocmqbh.execute-api.ca-central-1.amazonaws.com/prod/user";
+
   const [theme, setTheme] = useState("light");
   const [profilePicture, setProfilePicture] = useState(pfp);
   const [name, setName] = useState("綾小路 清隆");
@@ -41,6 +43,8 @@ const MainPage = () => {
   });
 
   const accessToken = Cookies.get("accessToken");
+
+  const [responseData, setResponseData] = useState([]); 
 
   useEffect(() => {
     fetchLogs();
@@ -157,6 +161,46 @@ const MainPage = () => {
     }
   });
 
+
+// Stats API
+  useEffect(() => {
+    axios
+      .get(STAT_URL, {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      })
+      .then((response) => {
+        console.log("API Response STATS:", response.data);
+        const parsedData = response.data.map((item) => ({
+          Id: item.Id,
+          Object: item.Object,
+          PK: item.PK,
+          SK: item.SK,
+          SubjectMinutes: item.SubjectMinutes,
+          TimeCreated: item.TimeCreated,
+          TotalMinutes: item.TotalMinutes,
+          Username: item.Username,
+        })) || [];
+        console.log("Parsed STATS:", parsedData);
+
+        
+      })
+      
+      .catch((error) => {
+        console.error("Error fetching STATS", error);
+      });
+    },[accessToken]);
+
+
+
+
+
+
+
+
+
+
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
@@ -188,11 +232,11 @@ const MainPage = () => {
   };
 
   const total_data = {
-    labels: ["Total Hours", "Average Hours"],
+    labels: ["Total Hours"],
     datasets: [
       {
         label: "Poll",
-        data: [120.4, 93], // Placeholder data
+        data: [1223], // Placeholder data
         backgroundColor: theme === "light" ? lightColors : darkColors,
         borderColor: ["black"],
         color: ["white"],
