@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import './App.css';
 import pfp from './images/ayanokoji.jpg';
@@ -106,7 +107,7 @@ const App = () => {
             <h2>Average per day 13.3hr/day</h2>
           </div>
         </div>
-      </div>  
+      </div>
     </div>
   );
 };
