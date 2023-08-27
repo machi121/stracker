@@ -1,37 +1,42 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap');
 
+:root {
+  --primary-color: #ff9900;
+  --secondary-color: #555;
+  --background-light: #f5f5f5;
+  --background-dark: #393646;
+  --text-light: #f4eee0;
+  --text-dark: #555;
+}
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap');
-
-/* Reset default margin and padding */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: all 0.3s;
 }
 
-/* Basic styling */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
+/* Main Container */
 .main {
   min-height: 100vh;
-  background-color: #f5f5f5;
-  transition: background-color 0.3s, color 0.3s;
+  background-color: var(--background-light);
 }
 
 .profile-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 0; 
+  margin-top: 0;
   margin-bottom: 40px;
-  padding-top: 40px; 
+  padding-top: 40px;
+  position: relative;
 }
 
 .theme-toggle {
@@ -42,17 +47,18 @@ body {
   top: 20px;
   right: 20px;
   z-index: 2;
-  color: #888;
+  color: var(--secondary-color);
   font-size: 14px;
   padding: 8px 16px;
   border-radius: 4px;
   background-color: #fff;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
 .theme-toggle:hover {
-  color: #555;
-  background-color: #f5f5f5;
+  color: var(--text-dark);
+  background-color: var(--background-light);
+  transform: scale(1.1);
 }
 
 .theme-toggle:focus {
@@ -64,56 +70,56 @@ body {
   color: #3f2305;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 40px 20px; 
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 80%;
-  max-width: 600px; 
+  max-width: 600px;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .profile-picture img {
-  width: 120px; 
+  width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .profile-details {
-  margin-top: 20px; 
+  margin-top: 20px;
   text-align: left;
+  font-family: 'Poppins', sans-serif;
 }
 
 .name {
-  font-size: 2rem; 
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 8px;
 }
 
 .username {
   color: #888;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .detail {
   display: flex;
   align-items: center;
   color: #555;
-  margin: 12px 0; 
+  margin: 12px 0;
 }
 
 .detail i {
-  margin-right: 12px; 
+  margin-right: 12px;
 }
 
 .bio {
-  margin-top: 30px; 
+  margin-top: 30px;
   color: #777;
   font-style: italic;
 }
 
-/* Dark theme */
 .dark {
   background-color: #393646;
   color: #f4eee0;
@@ -138,23 +144,22 @@ body {
 .dark .username,
 .dark .detail,
 .dark .bio {
-  color: #f4eee0; 
+  color: #f4eee0;
 }
 
-/* Stat Section */
-
+/* Stats */
 .stats-section > h1 {
   text-align: center;
-  font-family: Poppins;
-  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 40px;
 }
 
 .stats {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: wrap;
-  margin-top: 20px; /* Add spacing between profile card and stat section */
+  margin-top: 20px;
 }
 
 .pie-graph {
@@ -164,59 +169,182 @@ body {
 }
 
 .chartjs-render-monitor .chartjs-doughnut-arc {
-  stroke: none; /* Remove stroke outlines */
+  stroke: none;
 }
 
 .main.light .pie-graph .chartjs-render-monitor {
-  filter: brightness(1.2); /* Lighten the chart colors in light theme */
+  filter: brightness(1.2);
 }
 
 .main.dark .pie-graph .chartjs-render-monitor {
-  filter: brightness(0.8); /* Darken the chart colors in dark theme */
+  filter: brightness(0.8);
 }
 
 .other-stats > h2 {
-  font-family: Roboto;
+  font-family: 'Roboto', sans-serif;
   margin-top: 20px;
+}
+
+/* Logs */
+.log-table {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 100px 30px 40px;
+  background-color: var(--background-light);
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  animation: slideInDown 0.5s ease-in-out; 
+}
+
+@keyframes slideInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dark .log-table {
+  color: var(--text-light);
+  background-color: var(--background-dark);
+  transition: background-color 0.3s;
+}
+
+.log-table table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.log-table th,
+.log-table td {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap; 
+}
+
+.log-table th:hover,
+.log-table td:hover,
+.log-table tr:hover {
+  background-color: #f2f2f2;
+  transition: background-color 0.3s;
+  cursor: pointer; 
+}
+
+.dark .log-table th:hover,
+.dark .log-table td:hover,
+.dark .log-table tr:hover {
+  background-color: #2d2d3a;
+  transition: background-color 0.3s;
+}
+
+.log-table th {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.log-table td {
+  font-size: 14px;
+  line-height: 1.4; 
+}
+
+.log-table input,
+.log-table select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+  font-size: 14px; 
+}
+
+.dark .log-table input,
+.dark .log-table select {
+  background-color: #2d2d3a;
+  color: #f4eee0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.log-table select {
+  appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M6 10L0 0h12L6 10z" fill="%23000"/></svg>') no-repeat right #f4eee0;
+  background-size: 12px;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+.add-log-button {
+  padding: 10px 20px;
+  background-color: #ff9900;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-log-button:hover {
+  background-color: #e68300;
+  transform: scale(1.05);
+}
+
+.log-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.log-actions .add-log-button {
+  margin: 0;
+  margin-top: 20px;
+  padding: 10px 20px;
+}
+
+.log-table.light .log-actions {
+  background-color: #f5f5f5;
+}
+
+.log-table.dark .log-actions {
+  background-color: #393646;
+}
+
+.log-heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #555;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding-bottom: 10px;
+}
+
+.main.dark .log-heading {
+  color: #f4eee0;
+  border-bottom: 2px solid #f4eee0;
+}
+
+.main.light .log-heading {
+  color: #333;
+  border-bottom: 2px solid #333;
 }
 
 @media screen and (max-width: 800px) {
   .stats {
-      flex-direction: column; /* Stack items in a column on smaller screens */
-      align-items: center; /* Center items horizontally */
+    flex-direction: column;
+    align-items: center;
   }
 
   .pie-graph {
-      margin-right: 0; /* Remove margin on smaller screens */
-      margin-bottom: 20px; /* Add margin at the bottom */
+    margin-right: 0;
+    margin-bottom: 20px;
   }
 }
-
-/*
-.stats-section>h1{
-    text-align: center;
-    font-family: Poppins;
-    
-}    
-
-.stats{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.other-stats>h2{
-    font-family: Roboto;
-}
-
-@media screen and (max-width: 800px) {
-    .stats{
-        flex-flow: column;
-    }
-    .other-stats>h2{
-        text-align: center;
-    }
-  }
-}
-*/
