@@ -8,7 +8,7 @@ const AuthCallbackPage = () => {
   const [showButton, setShowButton] = useState(true);
 
   useEffect(() => {
-    console.log('AuthCallbackPage useEffect triggered');
+    // console.log('AuthCallbackPage useEffect triggered');
 
     const urlParams = new URLSearchParams(window.location.hash.substring(1));
     const idToken = urlParams.get('id_token');
@@ -16,12 +16,12 @@ const AuthCallbackPage = () => {
   
     Cookies.set('idToken', idToken);
     Cookies.set('accessToken', accessToken);
-  
+    
     console.log(Cookies.get('idToken'));
     console.log(Cookies.get('accessToken'));
   }, []);
 
-  console.log('Rendering AuthCallbackPage');
+  // console.log('Rendering AuthCallbackPage');
 
   const handleGoToHomeClick = () => {
     navigate('/main');
