@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import pfp from "../images/ayanokoji.jpg";
+import logo from "../images/logo.png";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Doughnut } from "react-chartjs-2";
@@ -33,10 +34,19 @@ const MainPage = () => {
     Duration: "", // Initialize with a default value
     Description: "",
   });
+  const [expiredMessage, setExpiredMessage] = useState("");
+  const [sortConfig, setSortConfig] = useState({
+    key: "TimeCreated", // Key for sorting
+    direction: "desc",
+  });
 
   const accessToken = Cookies.get("accessToken");
 
   useEffect(() => {
+    fetchLogs();
+  }, []);
+
+  const fetchLogs = () => {
     axios
       .get(API_URL, {
         headers: {
@@ -44,23 +54,108 @@ const MainPage = () => {
         },
       })
       .then((response) => {
-        console.log("API Response Data:", response.data); // Log the response to inspect its structure
-
         const fetchedLogs =
           response.data.map((item) => ({
             Subject: item.Subject,
-            Duration: item.Duration,
-            TimeCreated: item.TimeCreated,
+            Duration: parseInt(item.Duration),
+            TimeCreated: parseInt(item.TimeCreated), // Keep it as a Unix timestamp
             Description: item.Description,
           })) || [];
 
-        console.log("Parsed Logs:", fetchedLogs);
         setLogs(fetchedLogs);
       })
       .catch((error) => {
-        console.error("Error fetching logs:", error);
+        if (
+          error.response &&
+          error.response.data.message === "The incoming token has expired"
+        ) {
+          setExpiredMessage(
+            "Your session has timed out. Redirecting to login page..."
+          );
+          setTimeout(() => {
+            window.location.href =
+              "https://strack1.auth.ca-central-1.amazoncognito.com/login?client_id=gpm3id372kcq7o79l6roja1gc&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth-callback";
+          }, 3000);
+        } else {
+          console.error("Error fetching logs:", error);
+        }
       });
-  }, [accessToken]);
+  };
+
+  const handleAddLog = () => {
+    if (!newLog.Subject || !newLog.Duration || !newLog.Description) {
+      // Prevent adding empty log
+      return;
+    }
+
+    const newLogToAdd = {
+      Subject: newLog.Subject,
+      Duration: newLog.Duration,
+      Description: newLog.Description,
+    };
+
+    axios
+      .post(API_URL, newLogToAdd, {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      })
+      .then(() => {
+        fetchLogs(); // Fetch logs again after successful addition
+        // Reset the newLog state after successful addition
+        setNewLog({
+          Subject: "",
+          Duration: "",
+          Description: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Error adding log:", error);
+        setError("Error adding log. Please try again later.");
+      });
+  };
+
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedLogs = logs.slice().sort((a, b) => {
+    if (sortConfig.key === "Duration") {
+      const aValue = parseInt(a[sortConfig.key]);
+      const bValue = parseInt(b[sortConfig.key]);
+      if (aValue < bValue) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    } else if (sortConfig.key === "TimeCreated") {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+      if (aValue < bValue) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    } else {
+      const aValue = a[sortConfig.key].toString().toLowerCase();
+      const bValue = b[sortConfig.key].toString().toLowerCase();
+      if (aValue < bValue) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    }
+  });
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -107,54 +202,20 @@ const MainPage = () => {
 
   const [error, setError] = useState(null);
 
-  const handleAddLog = () => {
-    if (!newLog.Subject || !newLog.Duration || !newLog.Description) {
-      // Prevent adding empty log
-      return;
-    }
-  
-    const newLogToAdd = {
-      Subject: newLog.Subject,
-      Duration: newLog.Duration,
-      TimeCreated: new Date().toISOString(),
-      Description: newLog.Description,
-    };
-  
-    axios
-      .post(API_URL, newLogToAdd, {
-        headers: {
-          Authorization: `${accessToken}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        const addedLog = {
-          Subject: newLog.Subject, // Use newLog.Subject instead of response.data.Subject
-          Duration: newLog.Duration,
-          TimeCreated: response.data.TimeCreated, // Use new Date().toISOString() for consistency
-          Description: newLog.Description,
-        };
-        setLogs((prevLogs) => [...prevLogs, addedLog]); // Update logs state with the new log
-  
-        // Reset the newLog state after successful addition
-        setNewLog({
-          Subject: "",
-          Duration: "",
-          Description: "",
-        });
-      })
-      .catch((error) => {
-        console.error("Error adding log:", error);
-        setError("Error adding log. Please try again later.");
-      });
-  };
-  
-
   return (
     <div className={`main ${theme}`}>
+      {expiredMessage && <p>{expiredMessage}</p>}
       <button className="theme-toggle" onClick={toggleTheme}>
         Toggle Theme
       </button>
+
+      <div className="logo-section">
+        <img
+          src={logo} 
+          alt="Website Logo"
+          className="website-logo"
+        />
+      </div>
 
       <div className="profile-section">
         <div className="profile-section">
@@ -210,19 +271,35 @@ const MainPage = () => {
         <table>
           <thead>
             <tr>
-              <th>Subject</th>
-              <th>Duration (minutes)</th>
-              <th>Time Created</th>
-              <th>Description</th>
+              <th onClick={() => handleSort("Subject")}>
+                Subject{" "}
+                {sortConfig.key === "Subject" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
+              <th onClick={() => handleSort("Duration")}>
+                Duration (minutes){" "}
+                {sortConfig.key === "Duration" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
+              <th onClick={() => handleSort("Description")}>
+                Description{" "}
+                {sortConfig.key === "Description" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
+              <th onClick={() => handleSort("TimeCreated")}>
+                Time Created{" "}
+                {sortConfig.key === "TimeCreated" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
             </tr>
           </thead>
           <tbody>
-            {logs.map((log) => (
-              <tr key={log.TimeCreated}>
+            {sortedLogs.map((log, index) => (
+              <tr key={index}>
                 <td>{log.Subject}</td>
                 <td>{log.Duration}</td>
-                <td>{new Date(log.TimeCreated).toLocaleString()}</td>
                 <td>{log.Description}</td>
+                <td>{new Date(log.TimeCreated).toLocaleString()}</td>
               </tr>
             ))}
             <tr>
@@ -254,15 +331,11 @@ const MainPage = () => {
                   type="number"
                   value={newLog.Duration}
                   onChange={(e) => {
-                    const parsedValue = parseInt(e.target.value);
-                    if (!isNaN(parsedValue)) {
-                      const newDuration = Math.max(0, parsedValue);
-                      setNewLog({ ...newLog, Duration: newDuration });
-                    }
+                    const newDuration = Math.max(0, parseInt(e.target.value));
+                    setNewLog({ ...newLog, Duration: newDuration });
                   }}
                 />
               </td>
-              <td>{new Date(newLog.TimeCreated).toLocaleString()}</td>
               <td>
                 <input
                   type="text"
@@ -272,6 +345,7 @@ const MainPage = () => {
                   }
                 />
               </td>
+              <td></td>
             </tr>
           </tbody>
         </table>

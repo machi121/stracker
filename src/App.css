@@ -29,6 +29,18 @@ body {
   background-color: var(--background-light);
 }
 
+.logo-section {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.website-logo {
+  width: 100px;
+  height: auto;
+  display: block;
+  padding: 0 auto;
+}
+
 .profile-section {
   display: flex;
   justify-content: center;
@@ -66,58 +78,76 @@ body {
 }
 
 .profile-card {
-  background-color: #f2ead3;
   color: #3f2305;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 40px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 60px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  max-width: 600px;
-  transition: background-color 0.3s, color 0.3s;
+  flex-direction: row;
+  max-width: 1400px; /* Adjust the width as needed */
+  margin: 0 auto;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  transform-style: preserve-3d;
+  position: relative;
+  perspective: 1000px;
+}
+
+.light .profile-card {
+  background: linear-gradient(135deg, #f2ead3 0%, #f9c88a 100%);
+}
+
+.profile-card:hover {
+  transform: rotateY(10deg);
 }
 
 .profile-picture img {
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   object-fit: cover;
+  border: 4px solid var(--background-light);
+  transition: border-color 0.3s;
+}
+
+.profile-picture img:hover {
+  border-color: var(--primary-color);
 }
 
 .profile-details {
-  margin-top: 20px;
+  flex: 1;
+  margin-left: 40px;
   text-align: left;
-  font-family: 'Poppins', sans-serif;
 }
 
 .name {
-  font-size: 2rem;
+  font-size: 2.8rem;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .username {
   color: #888;
   margin-bottom: 20px;
+  font-size: 1.4rem;
 }
 
 .detail {
   display: flex;
   align-items: center;
   color: #555;
-  margin: 12px 0;
+  margin: 14px 0;
+  font-size: 1.3rem;
 }
 
 .detail i {
-  margin-right: 12px;
+  margin-right: 10px; /* Adjust the spacing as needed */
 }
 
 .bio {
-  margin-top: 30px;
+  margin-top: 40px;
   color: #777;
   font-style: italic;
+  font-size: 1.3rem;
 }
 
 .dark {
