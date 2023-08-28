@@ -2,6 +2,7 @@ import React from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./components/MainPage";
 import AuthCallbackPage from "./components/AuthCallbackPage";
+import PageNotFound from "./components/PageNotFound"
 
 export const Routez = () => {
   return (
@@ -10,6 +11,7 @@ export const Routez = () => {
         <Route path="/auth-callback" element={<AuthCallbackPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/" element={<RedirectToLogin />} />
+        <Route path="*" element={<PageNotFound />} /> {/* Use the correct component name */}
       </Routes>
     </HashRouter>
   );
