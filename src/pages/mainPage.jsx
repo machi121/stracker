@@ -13,7 +13,8 @@ const MainPage = () => {
   const API_URL =
     "https://oif3ocmqbh.execute-api.ca-central-1.amazonaws.com/prod/user/log";
 
-  const STAT_URL = "https://oif3ocmqbh.execute-api.ca-central-1.amazonaws.com/prod/user";
+  const STAT_URL =
+    "https://oif3ocmqbh.execute-api.ca-central-1.amazonaws.com/prod/user";
 
   const [theme, setTheme] = useState("light");
   const [profilePicture, setProfilePicture] = useState(pfp);
@@ -41,10 +42,48 @@ const MainPage = () => {
     key: "TimeCreated", // Key for sorting
     direction: "desc",
   });
+  const lightColors = ["#96B6C5", "#A0C49D", "#A9907E"];
+  const darkColors = ["#614BC3", "#678983", "#352F44"];
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: theme === "light" ? lightColors : darkColors,
+        borderColor: ["black"],
+        color: ["white"],
+        borderWidth: 0,
+      },
+    ],
+  });
+
+  const [totalMinutesStudied, setTotalMinutesStudied] = useState(0);
+  const [numDays, setNumDays] = useState(0);
+
+  const averageMinutesPerDay = totalMinutesStudied / (numDays || 1);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const accessToken = Cookies.get("accessToken");
 
-  const [responseData, setResponseData] = useState([]); 
+  const [responseData, setResponseData] = useState([]);
+
+  // Calculate the total time spent on each subject
+  const calculateTimeSpentPerSubject = () => {
+    const subjectMap = new Map();
+
+    logs.forEach((log) => {
+      if (!subjectMap.has(log.Subject)) {
+        subjectMap.set(log.Subject, log.Duration);
+      } else {
+        subjectMap.set(log.Subject, subjectMap.get(log.Subject) + log.Duration);
+      }
+    });
+
+    return subjectMap;
+  };
 
   useEffect(() => {
     fetchLogs();
@@ -67,6 +106,23 @@ const MainPage = () => {
           })) || [];
 
         setLogs(fetchedLogs);
+
+        // Calculate total minutes studied
+        let totalMinutes = 0;
+        fetchedLogs.forEach((log) => {
+          totalMinutes += log.Duration;
+        });
+        setTotalMinutesStudied(totalMinutes);
+
+        // Calculate the number of days
+        const startTimestamp =
+          logs.length > 0 ? logs[logs.length - 1].TimeCreated : Date.now();
+        const endTimestamp = Date.now();
+        const millisecondsPerDay = 24 * 60 * 60 * 1000;
+        const days = Math.ceil(
+          (endTimestamp - startTimestamp) / millisecondsPerDay
+        );
+        setNumDays(days);
       })
       .catch((error) => {
         if (
@@ -161,8 +217,8 @@ const MainPage = () => {
     }
   });
 
-
-// Stats API
+  /*
+  // Stats API
   useEffect(() => {
     axios
       .get(STAT_URL, {
@@ -171,65 +227,36 @@ const MainPage = () => {
         },
       })
       .then((response) => {
-        console.log("API Response STATS:", response.data);
-        const parsedData = response.data.map((item) => ({
-          Id: item.Id,
-          Object: item.Object,
-          PK: item.PK,
-          SK: item.SK,
-          SubjectMinutes: item.SubjectMinutes,
-          TimeCreated: item.TimeCreated,
-          TotalMinutes: item.TotalMinutes,
-          Username: item.Username,
-        })) || [];
-        console.log("Parsed STATS:", parsedData);
+        console.log("API Response:", response.data);
+        const parsedData =
+          response.data.map((item) => ({
+            Subject: item.Object,
+            Minutes: item.SubjectMinutes,
+          })) || [];
 
-        
+        const labels = parsedData.map((data) => data.Subject);
+        const dataPoints = parsedData.map((data) => data.Minutes);
+
+        console.log("Labels:", labels);
+        console.log("Data Points:", dataPoints);
+
+        setData({
+          labels: labels,
+          datasets: [
+            {
+              data: dataPoints,
+              backgroundColor: theme === "light" ? lightColors : darkColors,
+              borderColor: ["black"],
+              color: ["white"],
+              borderWidth: 0,
+            },
+          ],
+        });
       })
-      
       .catch((error) => {
         console.error("Error fetching STATS", error);
       });
-    },[accessToken]);
-
-
-
-
-
-
-
-
-
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
-
-  const lightColors = ["#96B6C5", "#A0C49D", "#A9907E"];
-  const darkColors = ["#614BC3", "#678983", "#352F44"];
-
-  const data = {
-    labels: SubjectOptions,
-    datasets: [
-      {
-        label: "Poll",
-        data: [3, 6, 8], // Placeholder data
-        backgroundColor: theme === "light" ? lightColors : darkColors,
-        borderColor: ["black"],
-        color: ["white"],
-        borderWidth: 0,
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    elements: {
-      arc: {
-        borderWidth: 0, // Set the border width to 0 to remove outlines
-      },
-    },
-  };
+  }, [accessToken, theme]);
 
   const total_data = {
     labels: ["Total Hours"],
@@ -244,72 +271,105 @@ const MainPage = () => {
     ],
   };
 
+  */
+
+  const options = {
+    responsive: true,
+    elements: {
+      arc: {
+        borderWidth: 0, // Set the border width to 0 to remove outlines
+      },
+    },
+  };
+
   const [error, setError] = useState(null);
+
+  // Calculate data for the pie chart
+  const getPieChartData = () => {
+    const timeSpentPerSubject = calculateTimeSpentPerSubject();
+    const labels = Array.from(timeSpentPerSubject.keys());
+    const dataPoints = Array.from(timeSpentPerSubject.values());
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          data: dataPoints,
+          backgroundColor: theme === "light" ? lightColors : darkColors,
+          borderColor: ["black"],
+          color: ["white"],
+          borderWidth: 0,
+        },
+      ],
+    };
+  };
 
   return (
     <div className={`main ${theme}`}>
       {expiredMessage && <p>{expiredMessage}</p>}
+
+      {/* Logo section */}
+      <div className="logo-section">
+        <img src={logo} alt="Website Logo" className="website-logo" />
+      </div>
+
       <button className="theme-toggle" onClick={toggleTheme}>
         Toggle Theme
       </button>
-
-      <div className="logo-section">
-        <img
-          src={logo} 
-          alt="Website Logo"
-          className="website-logo"
-        />
-      </div>
-
       <div className="profile-section">
-        <div className="profile-section">
-          <div className="profile-card">
-            <div className="profile-picture">
-              <img src={profilePicture} alt="Profile" />
+        <div className="profile-card">
+          <div className="profile-picture">
+            <img src={profilePicture} alt="Profile" />
+          </div>
+
+          {/* Profile details */}
+          <div className="profile-details">
+            <div className="name">{name}</div>
+            <div className="username">@{username}</div>
+            <div className="detail">
+              <i className="fas fa-user"></i>{" "}
+              <span>
+                {gender}, {age} years old
+              </span>
             </div>
-            <div className="profile-details">
-              <div className="name">{name}</div>
-              <div className="username">@{username}</div>
-              <div className="detail">
-                <i className="fas fa-user"></i>{" "}
-                <span>
-                  {gender}, {age} years old
-                </span>
+            <div className="detail">
+              <i className="fas fa-graduation-cap"></i> <span>{grade}</span>
+            </div>
+            <div className="detail">
+              <i className="fas fa-school"></i> <span>{school}</span>
+            </div>
+            <div className="detail">
+              <i className="fas fa-map-marker-alt"></i> <span>{location}</span>
+            </div>
+            <div className="bio">
+              <p>{bio}</p>
+            </div>
+          </div>
+
+          {/* User Stats */}
+          <div className="user-stats">
+            <div className="stats">
+              <div className="pie-graph">
+                <Pie data={getPieChartData()} options={options} width={200} />
               </div>
-              <div className="detail">
-                <i className="fas fa-graduation-cap"></i> <span>{grade}</span>
+
+              {/* Total Minutes Studied */}
+              <div className="total-minutes-section">
+                <h2>Total Minutes Studied</h2>
+                <p>{totalMinutesStudied} minutes</p>
               </div>
-              <div className="detail">
-                <i className="fas fa-school"></i> <span>{school}</span>
-              </div>
-              <div className="detail">
-                <i className="fas fa-map-marker-alt"></i>{" "}
-                <span>{location}</span>
-              </div>
-              <div className="bio">
-                <p>{bio}</p>
+
+              {/* Display the average hours per day */}
+              <div className="total-minutes-section">
+                <h2>Average Minutes Per Day</h2>
+                <p>{averageMinutesPerDay.toFixed(2)} minutes</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="stats-section">
-        <h1>User Stats</h1>
-        <div className="stats">
-          <div className="pie-graph">
-            <Pie
-              data={data}
-              options={options}
-              width={200} // Adjust the width to your preference
-            />
-          </div>
-          <div className="other-stats">
-            <Doughnut data={total_data} options={options} />
-          </div>
-        </div>
-      </div>
-
+      {/* Log table */}
       <div className="log-table">
         <h1 className="log-heading">Your Logs</h1>
         <table>

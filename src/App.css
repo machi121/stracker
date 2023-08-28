@@ -1,5 +1,6 @@
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap");
 
 :root {
   --primary-color: #f9c88a;
@@ -18,7 +19,7 @@
 }
 
 body {
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -27,18 +28,23 @@ body {
 .main {
   min-height: 100vh;
   background-color: var(--background-light);
+  transition: background-color 0.3s; /* Add transition for smooth color change */
 }
 
 .logo-section {
-  text-align: center;
-  margin: 40px 0;
+  display: flex;
+  align-items: center;
+  padding: 20px 30px;
+  position: absolute;
+  top: 10px;
+  left: 10px; /* Adjust the left position */
+  z-index: 2;
 }
 
 .website-logo {
-  width: 100px;
+  width: 150px;
   height: auto;
-  display: block;
-  padding: 0 auto;
+  margin-right: 20px;
 }
 
 .profile-section {
@@ -47,7 +53,7 @@ body {
   align-items: center;
   margin-top: 0;
   margin-bottom: 40px;
-  padding-top: 40px;
+  padding-top: 40px 0;
   position: relative;
 }
 
@@ -63,13 +69,13 @@ body {
   font-size: 14px;
   padding: 8px 16px;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: (--background-light);
   transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
 .theme-toggle:hover {
   color: var(--text-dark);
-  background-color: var(--background-light);
+  background-color: rgba(255, 255, 255, 0.1);
   transform: scale(1.1);
 }
 
@@ -78,26 +84,59 @@ body {
 }
 
 .profile-card {
+  /* Updated card styles */
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--background-light) 0%,
+    var(--primary-color) 50%
+  );
   color: #3f2305;
-  border-radius: 16px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   padding: 60px;
   display: flex;
   flex-direction: row;
-  max-width: 1400px; /* Adjust the width as needed */
+  max-width: 1400px;
   margin: 0 auto;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s;
-  transform-style: preserve-3d;
   position: relative;
+  overflow: hidden;
   perspective: 1000px;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
-.light .profile-card {
-  background: linear-gradient(135deg, #f2ead3 0%, #f9c88a 100%);
+.profile-card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  pointer-events: none; /* Allow clicks through the pseudo-element */
+  z-index: -1; /* Behind the content */
+}
+
+.dark .profile-card {
+  background: linear-gradient(
+    135deg,
+    var(--background-dark) 0%,
+    var(--primary-color) 100%
+  );
+}
+
+.profile-picture {
+  position: relative; /* Ensure relative positioning */
+  margin-left: 20px; /* Adjust the margin */
 }
 
 .profile-card:hover {
-  transform: rotateY(10deg);
+  transform: rotateY(11deg);
+  transition: transform 0.3s;
 }
 
 .profile-picture img {
@@ -106,17 +145,23 @@ body {
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid var(--background-light);
-  transition: border-color 0.3s;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .profile-picture img:hover {
   border-color: var(--primary-color);
+  transform: scale(1.1);
+  transition: border-color 0.3s, transform 0.3s;
 }
 
 .profile-details {
   flex: 1;
   margin-left: 40px;
   text-align: left;
+  border-bottom: 1px solid var(--primary-color);
+  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .name {
@@ -178,10 +223,21 @@ body {
 }
 
 /* Stats */
+
+.stats-section {
+  text-align: center; /* Center align content */
+  padding: 0 0;
+}
+
 .stats-section > h1 {
   text-align: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin-bottom: 40px;
+  background-color: var(--background-light);
+}
+
+.dark .stats-section > h1 {
+  background-color: var(--background-dark);
 }
 
 .stats {
@@ -211,19 +267,64 @@ body {
 }
 
 .other-stats > h2 {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   margin-top: 20px;
+}
+
+/* Total Minutes */
+.total-minutes-section {
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--background-light);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s;
+}
+
+.dark .total-minutes-section {
+  background-color: #4f4557;
+}
+
+.total-minutes-section h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.dark .total-minutes-section h2 {
+  color: #f4eee0;
+}
+
+.total-minutes-section p {
+  font-size: 18px;
+  color: #555;
+}
+
+.dark .total-minutes-section p {
+  color: #f4eee0;
 }
 
 /* Logs */
 .log-table {
   max-width: 100%;
   overflow-x: auto;
-  padding: 100px 30px 40px;
-  background-color: var(--background-light);
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(to bottom, var(--background-light), var(--background-light));
+  padding: 30px 30px 40px;
+  background: linear-gradient(
+    to bottom,
+    var(--background-light),
+    var(--background-light)
+  );
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Add box shadow */
+  animation: slideInDown 0.5s ease-in-out;
+  transform-style: preserve-3d;
+  position: relative;
+  perspective: 1000px;
+  margin-top: 80px;
 }
 
 @keyframes slideInDown {
@@ -239,9 +340,12 @@ body {
 
 .dark .log-table {
   color: var(--text-light);
-  background-color: var(--background-dark);
+  background: linear-gradient(
+    to bottom,
+    var(--background-dark),
+    var(--background-dark)
+  );
   transition: background-color 0.3s;
-  background: linear-gradient(to bottom, var(--background-dark), var(--background-dark));
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
@@ -256,7 +360,7 @@ body {
   padding: 12px 16px;
   border: 1px solid #ddd;
   text-align: left;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .log-table th:hover,
@@ -264,7 +368,7 @@ body {
 .log-table tr:hover {
   background-color: #f2f2f2;
   transition: background-color 0.3s;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .dark .log-table th:hover,
@@ -306,7 +410,7 @@ body {
 
 .log-table td {
   font-size: 14px;
-  line-height: 1.4; 
+  line-height: 1.4;
   padding: 12px 16px;
   text-align: center;
   white-space: nowrap;
@@ -323,7 +427,7 @@ body {
   border: 1px solid #555;
   border-radius: 4px;
   transition: border-color 0.3s, background-color 0.3s, color 0.3s;
-  font-size: 14px; 
+  font-size: 14px;
 }
 
 .dark .log-table input,
@@ -335,7 +439,8 @@ body {
 
 .log-table select {
   appearance: none;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M6 10L0 0h12L6 10z" fill="%23000"/></svg>') no-repeat right #f4eee0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M6 10L0 0h12L6 10z" fill="%23000"/></svg>')
+    no-repeat right #f4eee0;
   background-size: 12px;
   padding-right: 30px;
   cursor: pointer;
@@ -343,7 +448,7 @@ body {
 
 .add-log-button {
   padding: 10px 20px;
-  background-color: #ff9900;
+  background-color: var(--primary-color);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -354,7 +459,8 @@ body {
 
 .add-log-button:hover {
   background-color: #e68300;
-  transform: scale(1.05);
+  transform: scale(1.05) rotate(5deg);
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .log-actions {
@@ -380,28 +486,50 @@ body {
 }
 
 .log-heading {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
   color: #555;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   padding-bottom: 10px;
 }
 
 .main.dark .log-heading {
   color: #f4eee0;
-  border-bottom: 2px solid #f4eee0;
+  border-bottom: 2px solid var(--primary-color);
 }
 
 .main.light .log-heading {
-  color: #333;
-  border-bottom: 2px solid #333;
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
 }
 
 @media screen and (max-width: 800px) {
+  /* Adjustments for smaller screens */
+  .profile-card {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .profile-picture {
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+
+  .profile-details {
+    margin-left: 0;
+    text-align: center;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .stats-section > h1 {
+    margin-bottom: 20px;
+  }
+
   .stats {
     flex-direction: column;
     align-items: center;
@@ -410,5 +538,36 @@ body {
   .pie-graph {
     margin-right: 0;
     margin-bottom: 20px;
+    max-width: 100%; /* Adjust as needed */
+  }
+
+  .total-minutes-section,
+  .log-heading {
+    text-align: center;
+  }
+
+  .log-table {
+    padding: 10px; /* Adjust padding for better spacing */
+  }
+
+  .log-table table {
+    font-size: 14px; /* Adjust font size for better readability */
+  }
+
+  .log-table th,
+  .log-table td {
+    padding: 8px 6px; /* Adjust spacing */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .log-table input,
+  .log-table select {
+    padding: 6px;
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .add-log-button {
+    padding: 8px 16px;
+    font-size: 12px; /* Adjust font size */
   }
 }
