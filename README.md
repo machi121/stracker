@@ -35,9 +35,9 @@ To run the Stracker website locally, follow these steps:
 
 ## Demo
 
-Check out the live demo of Stracker: [https://your-deployed-website-url.com](https://your-deployed-website-url.com)
+Check out the live demo of Stracker: [Live Demo](https://your-deployed-website-url.com)
 
-Watch a quick demo of Stracker on YouTube: [https://youtu.be/your-video-id](https://youtu.be/your-video-id)
+Watch a quick demo of Stracker on YouTube: [Video Demo](https://youtu.be/your-video-id)
 
 ## Future Enhancements
 Our plans for Stracker's future development include:
