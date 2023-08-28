@@ -13,9 +13,11 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const App = () => {
   return (
-    <div className={`main`}>
-      <Routez />
-    </div>
+    <HashRouter>
+      <div className={`main`}>
+        <Routez />
+      </div>
+    </HashRouter>
   );
 };
 
