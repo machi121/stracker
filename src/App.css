@@ -307,6 +307,27 @@ body {
   color: #f4eee0;
 }
 
+/* Heatmap */
+.streak-heatmap {
+  margin-top: 20px;
+}
+
+.react-calendar-heatmap .color-empty {
+  fill: #f0f0f0;
+}
+
+.react-calendar-heatmap .color-scale-1 {
+  fill: #96B6C5;
+}
+
+.react-calendar-heatmap .color-scale-2 {
+  fill: #A0C49D;
+}
+
+.react-calendar-heatmap .color-scale-3 {
+  fill: #A9907E;
+}
+
 /* Logs */
 .log-table {
   max-width: 100%;

@@ -4,6 +4,8 @@ import logo from "../images/logo.png";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Doughnut } from "react-chartjs-2";
+import CalendarHeatmap from "react-calendar-heatmap";
+import "react-calendar-heatmap/dist/styles.css";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -140,6 +142,31 @@ const MainPage = () => {
           console.error("Error fetching logs:", error);
         }
       });
+  };
+
+  const generateStreakData = (logs) => {
+    // Generate your streak data array based on logs
+    // For simplicity, I'm assuming the logs have a "TimeCreated" property as Unix timestamps
+    const streakData = []; // Array of objects, each representing a day
+
+    // Calculate the start and end dates for the streak heatmap
+    const startDate = new Date(new Date().setMonth(new Date().getMonth() - 6)); // Assuming a 6-month streak period
+    const endDate = new Date();
+
+    // Loop through each day and determine if it's active or not
+    for (
+      let date = new Date(startDate);
+      date <= endDate;
+      date.setDate(date.getDate() + 1)
+    ) {
+      const activeDay = logs.some((log) => {
+        const logDate = new Date(log.TimeCreated);
+        return logDate.toDateString() === date.toDateString();
+      });
+      streakData.push({ date, count: activeDay ? 1 : null });
+    }
+
+    return streakData;
   };
 
   const handleAddLog = () => {
@@ -363,6 +390,22 @@ const MainPage = () => {
               <div className="total-minutes-section">
                 <h2>Average Minutes Per Day</h2>
                 <p>{averageMinutesPerDay.toFixed(2)} minutes</p>
+              </div>
+              {/* Streak Heatmap */}
+              <div className="streak-heatmap">
+                <h2>Activity Streak</h2>
+                <CalendarHeatmap
+                  startDate={new Date().setMonth(new Date().getMonth() - 6)} // Assuming a 6-month streak period
+                  endDate={new Date()}
+                  values={generateStreakData(logs)} // Pass the generated streak data array
+                  showOutOfRangeDays={false}
+                  classForValue={(value) => {
+                    if (!value) {
+                      return "color-empty";
+                    }
+                    return `color-scale-${value.count}`;
+                  }}
+                />
               </div>
             </div>
           </div>
