@@ -9,14 +9,12 @@ import AuthCallbackPage from "./components/AuthCallbackPage";
 import { Routez } from "./Routes";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-  
+
 const App = () => {
   return (
-    <HashRouter basename="/">
-      <div className={`main`}>
-        <Routez />
-      </div>
-    </HashRouter>
+    <div className={`main`}>
+      <Routez />
+    </div>
   );
 };
 
