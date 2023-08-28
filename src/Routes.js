@@ -2,11 +2,11 @@ import React from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./components/MainPage";
 import AuthCallbackPage from "./components/AuthCallbackPage";
-import PageNotFound from "./components/PageNotFound"
+import PageNotFound from "./components/PageNotFound";
 
 export const Routez = () => {
   return (
-    <HashRouter basename="/">
+    <HashRouter>
       <Routes>
         <Route path="/auth-callback" element={<AuthCallbackPage />} />
         <Route path="/main" element={<MainPage />} />
@@ -29,3 +29,5 @@ const RedirectToLogin = () => {
     "https://strack1.auth.ca-central-1.amazoncognito.com/login?client_id=gpm3id372kcq7o79l6roja1gc&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https%3A%2F%2Fmachi121.github.io%2Fstracker%2Fauth-callback";
   return null;
 };
+
+export default Routez;
