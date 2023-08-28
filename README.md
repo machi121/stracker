@@ -1,6 +1,6 @@
 # Stracker - Study Time Tracking Website
 
-![Stracker Logo](./src/images/logo.png)
+<img src="./src/images/logo.png" alt="Stracker Logo" width="200" height="200">
 
 Stracker is a full-stack web application designed to help users log their study time and track relevant statistics to improve time management skills.
 
