@@ -21,7 +21,7 @@ const AuthCallbackPage = () => {
     console.log(Cookies.get('accessToken'));
   }, []);
 
-  // console.log('Rendering AuthCallbackPage');
+  console.log('Rendering AuthCallbackPage');
 
   const handleGoToHomeClick = () => {
     navigate('/main');
