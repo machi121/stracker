@@ -11,7 +11,7 @@ Stracker is a full-stack web application designed to help users log their study 
 - [Getting Started](#getting-started)
 - [Demo](#demo)
 - [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
+- [Contributors](#contributors)
 
 ## Introduction
 Stracker was developed as a personal project to address the need for improved time management habits after completing the 11th grade. The application allows users to log their study time and provides statistical insights to help users analyze their productivity trends.
@@ -35,16 +35,19 @@ To run the Stracker website locally, follow these steps:
 
 ## Demo
 
-Check out the live demo of Stracker: [Live Demo](https://your-deployed-website-url.com)
+The live demo of Stracker will be coming soon. 
 
-Watch a quick demo of Stracker on YouTube: [Video Demo](https://youtu.be/your-video-id)
+Watch a quick demo of Stracker on YouTube: [Video Demo](https://youtu.be/2IpPxmmlxik)
 
 ## Future Enhancements
 Our plans for Stracker's future development include:
 - Implementing a leaderboard system to view friends' activity logs.
 - Enhancing versatility with additional features.
 
-## Contributing
+## Contributors
+- Backend: NerdBow (@NerdBow on GitHub), Edwin Chen
+- Frontend: machi121 (@machi121 on GitHub), HamseArwo (@HamseArwo on GitHub)
+
 Contributions are welcome! If you'd like to contribute to Stracker, follow these steps:
 1. Fork the repository.
 2. Create a new branch for your feature: `git checkout -b feature-name`

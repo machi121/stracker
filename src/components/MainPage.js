@@ -505,7 +505,6 @@ const MainPage = () => {
               </td>
               <td></td>
             </tr>
-            z
           </tbody>
         </table>
         <div className="log-actions"></div>
