@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/stracker/static/css/main.d6cf924a.css",
+    "main.js": "/stracker/static/js/main.e9cbb326.js",
+    "static/js/787.94ce7ffd.chunk.js": "/stracker/static/js/787.94ce7ffd.chunk.js",
+    "static/media/fa-solid-900.ttf": "/stracker/static/media/fa-solid-900.d75e3fd1eb12e9bd6655.ttf",
+    "static/media/fa-brands-400.ttf": "/stracker/static/media/fa-brands-400.016b4a6cdced82ab3aa1.ttf",
+    "static/media/fa-solid-900.woff2": "/stracker/static/media/fa-solid-900.b6879d41b0852f01ed5b.woff2",
+    "static/media/logo.png": "/stracker/static/media/logo.cae33ebf361f5b832f9a.png",
+    "static/media/fa-brands-400.woff2": "/stracker/static/media/fa-brands-400.878f31251d960bd6266f.woff2",
+    "static/media/fa-regular-400.ttf": "/stracker/static/media/fa-regular-400.50701fbb8177c2dde530.ttf",
+    "static/media/ayanokoji.jpg": "/stracker/static/media/ayanokoji.211c0ca639df092d0101.jpg",
+    "static/media/fa-regular-400.woff2": "/stracker/static/media/fa-regular-400.b041b1fa4fe241b23445.woff2",
+    "static/media/fa-v4compatibility.ttf": "/stracker/static/media/fa-v4compatibility.c6a0c95b0a95c4553700.ttf",
+    "static/media/fa-v4compatibility.woff2": "/stracker/static/media/fa-v4compatibility.1bac2991f3dbfa237aec.woff2",
+    "index.html": "/stracker/index.html",
+    "main.d6cf924a.css.map": "/stracker/static/css/main.d6cf924a.css.map",
+    "main.e9cbb326.js.map": "/stracker/static/js/main.e9cbb326.js.map",
+    "787.94ce7ffd.chunk.js.map": "/stracker/static/js/787.94ce7ffd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d6cf924a.css",
+    "static/js/main.e9cbb326.js"
+  ]
+}
