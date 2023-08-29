@@ -1,6 +1,6 @@
 {
-  "homepage": "https://machi121.github.io/stracker",
-  "name": "stracker",
+  "homepage": "https://machi121.github.io/stracker/",
+  "name": "stracker", 
   "version": "0.1.0",
   "private": true,
   "dependencies": {
