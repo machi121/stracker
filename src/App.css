@@ -225,8 +225,22 @@ body {
 /* Stats */
 
 .stats-section {
-  text-align: center; /* Center align content */
+  text-align: center;
   padding: 0 0;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .stats-section > h1 {
@@ -234,6 +248,9 @@ body {
   font-family: "Poppins", sans-serif;
   margin-bottom: 40px;
   background-color: var(--background-light);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s 0.3s forwards;
 }
 
 .dark .stats-section > h1 {
@@ -309,7 +326,30 @@ body {
 
 /* Heatmap */
 .streak-heatmap {
-  margin-top: 20px;
+  display: inline-block;
+  background-color: var(--primary-color); /* Change to primary color */
+  color: var(--text-light); /* Change to text-light color */
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin-left: 30px; /* Adjust spacing as needed */
+  font-size: 36px; /* Adjust size as needed */
+}
+
+.dark .streak-heatmap {
+  background-color: #4f4557;
+  color: var(--text-light);
+}
+
+.streak-heatmap h2 {
+  color: var(--text-light);
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dark.streak-heatmap h2 {
+  color: var(--text-light);
 }
 
 .react-calendar-heatmap .color-empty {
@@ -590,5 +630,10 @@ body {
   .add-log-button {
     padding: 8px 16px;
     font-size: 12px; /* Adjust font size */
+  }
+
+  .streak-heatmap {
+    padding: 8px 16px; /* Adjust padding for smaller screens */
+    font-size: 24px; /* Adjust font size for smaller screens */
   }
 }

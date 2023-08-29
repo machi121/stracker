@@ -304,7 +304,14 @@ const MainPage = () => {
     responsive: true,
     elements: {
       arc: {
-        borderWidth: 0, // Set the border width to 0 to remove outlines
+        borderWidth: 0,
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: theme === "light" ? "#555" : "#f4eee0", // Customize text color based on theme
+        },
       },
     },
   };
@@ -341,7 +348,11 @@ const MainPage = () => {
       </div>
 
       <button className="theme-toggle" onClick={toggleTheme}>
-        Toggle Theme
+        {theme === "light" ? (
+          <i className="fas fa-moon" style={{ fontSize: "20px" }}></i> // Moon icon for light theme
+        ) : (
+          <i className="fas fa-sun" style={{ fontSize: "20px" }}></i> // Sun icon for dark theme
+        )}
       </button>
       <div className="profile-section">
         <div className="profile-card">
@@ -494,6 +505,7 @@ const MainPage = () => {
               </td>
               <td></td>
             </tr>
+            z
           </tbody>
         </table>
         <div className="log-actions"></div>
